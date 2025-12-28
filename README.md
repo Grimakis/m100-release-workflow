@@ -7,8 +7,9 @@ Reusable GitHub Actions workflow that builds Model 100 artifacts via `@m100/cli`
 name: Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - "v*"
 
 jobs:
   release:
@@ -26,3 +27,5 @@ jobs:
 - `out-dir` (optional): Output directory. Default: `dist`.
 - `artifact-name` (optional): Artifact name. Default: `model100-game-build`.
 - `cli-package` (optional): NPM package to install. Default: `@m100/cli`.
+- `create-release` (optional): Create a GitHub release after successful build. Default: `true`.
+- `release-draft` (optional): Create release as draft. Default: `false`.

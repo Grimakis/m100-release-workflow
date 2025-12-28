@@ -26,6 +26,14 @@ on:
         type: string
         required: false
         default: ""
+      create-release:
+        type: boolean
+        required: false
+        default: true
+      release-draft:
+        type: boolean
+        required: false
+        default: false
       version-var:
         type: string
         required: false
@@ -107,9 +115,10 @@ jobs:
           path: ${{ inputs.out-dir }}/
 
       - name: Attach artifacts to GitHub Release
-        if: startsWith(github.ref, 'refs/tags/')
+        if: ${{ inputs.create-release && startsWith(github.ref, 'refs/tags/') }}
         uses: softprops/action-gh-release@v1
         with:
+          draft: ${{ inputs.release-draft }}
           files: |
             ${{ steps.build.outputs.ascii-path }}
             ${{ steps.build.outputs.tokenized-path }}
