@@ -86,7 +86,8 @@ jobs:
             exit 1
           fi
 
-          SRC_VERSION=$(echo "$match" | sed 's/.*"\\(.*\\)".*/\\1/')
+          SRC_VERSION="${match#*\"}"
+          SRC_VERSION="${SRC_VERSION%\"*}"
           TAG_VERSION=${GITHUB_REF#refs/tags/}
           TAG_VERSION=${TAG_VERSION#v}
           SRC_VERSION=${SRC_VERSION#v}
